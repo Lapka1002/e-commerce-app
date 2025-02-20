@@ -1,10 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { fetchProducts, fetchCategories } from "../services/api";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Products = () => {
-
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -14,18 +13,6 @@ const Products = () => {
   const limit = 9;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const category = queryParams.get("category");
-    if (category) {
-      setSelectedCategory(category);
-    }
-  }, [location]);
-
 
   const loadData = async () => {
     try {
@@ -53,11 +40,6 @@ const Products = () => {
     loadData();
   }, [selectedCategory, minPrice, maxPrice, page]);
 
-  const handleCategorySelect = (categoryName) => {
-    setSelectedCategory(categoryName);
-    navigate(categoryName ? `/products?category=${categoryName}` : "/products")
-  }
-
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Products</h1>
@@ -65,11 +47,11 @@ const Products = () => {
         <select
           className="border p-2"
           value={selectedCategory}
-          onChange={(e) => handleCategorySelect(e.target.value)}
+          onChange={(e) => setSelectedCategory(e.target.value)}
         >
           <option value="">All Categories</option>
           {categories.map((category, index) => (
-            <option key={index} value={category.name} >
+            <option key={index} value={category.name}>
               {category.name}
             </option>
           ))}

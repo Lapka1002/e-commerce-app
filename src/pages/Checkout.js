@@ -2,6 +2,8 @@ import React from "react";
 import { useFormik } from "formik";
 import { useShoppingCart } from "../contexts/CartContext";
 
+import checkoutValidatonSchema from "../validationSchemas/checkoutValidationSchema";
+
 const Checkout = () => {
   const { cartItems, totalPrice } = useShoppingCart();
 
@@ -14,18 +16,24 @@ const Checkout = () => {
       cardName: "",
       cardNumber: "",
       expiry: "",
-      ccv: "",
+      cvc: "",
       company: "",
-      adress: "",
+      address: "",
       apartment: "",
       city: "",
       state: "",
-      postalCode:""
+      postalCode: "",
     },
+    validationSchema: checkoutValidatonSchema,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
   });
+
+  const renderError = (field) =>
+    formik.touched[field] && formik.errors[field] ? (
+      <p className="text-red-500 text-sm">{formik.errors[field]}</p>
+    ) : null;
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">
@@ -50,6 +58,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.email}
                 />
+                {renderError('email')}
               </div>
               <div className="w-1/2">
                 <label
@@ -66,12 +75,13 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.phone}
                 />
+                {renderError('phone')}
               </div>
             </div>
             <div className="flex space-x-4">
               <div className="w-1/2">
                 <label
-                  htmlFor="email"
+                  htmlFor="firstName"
                   className="block text-sm font-medium text-gray-700"
                 >
                   First name
@@ -84,10 +94,11 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.firstName}
                 />
+                {renderError('firstName')}
               </div>
               <div className="w-1/2">
                 <label
-                  htmlFor="email"
+                  htmlFor="lastName"
                   className="block text-sm font-medium text-gray-700"
                 >
                   Last name
@@ -100,6 +111,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.lastName}
                 />
+                {renderError('lastName')}
               </div>
             </div>
 
@@ -119,6 +131,7 @@ const Checkout = () => {
                 onChange={formik.handleChange}
                 value={formik.values.cardName}
               />
+              {renderError('cardName')}
             </div>
             <div>
               <label
@@ -135,6 +148,7 @@ const Checkout = () => {
                 onChange={formik.handleChange}
                 value={formik.values.cardNumber}
               />
+              {renderError('cardNumber')}
             </div>
             <div className="flex space-x-4">
               <div className="w-1/2">
@@ -152,6 +166,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.expiry}
                 />
+                {renderError('expiry')}
               </div>
               <div className="w-1/2">
                 <label
@@ -168,6 +183,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.cvc}
                 />
+                {renderError('cvc')}
               </div>
             </div>
 
@@ -190,19 +206,20 @@ const Checkout = () => {
             </div>
             <div>
               <label
-                htmlFor="adress"
+                htmlFor="address"
                 className="block text-sm font-medium text-gray-700"
               >
                 Adress
               </label>
               <input
                 type="text"
-                id="adress"
-                name="adress"
+                id="address"
+                name="address"
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2"
                 onChange={formik.handleChange}
-                value={formik.values.adress}
+                value={formik.values.address}
               />
+              {renderError('address')}
             </div>
             <div>
               <label
@@ -236,6 +253,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.city}
                 />
+                {renderError('city')}
               </div>
               <div className="w-1/3">
                 <label
@@ -252,6 +270,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.state}
                 />
+                {renderError('state')}
               </div>
               <div className="w-1/3">
                 <label
@@ -268,6 +287,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.postalCode}
                 />
+                {renderError('postalCode')}
               </div>
             </div>
             <button
