@@ -7,12 +7,39 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
 
+  const API_BASE_URL = "https://dummyjson.com/auth";
+
+  const loginUser = async (email, password) => {
+    try {
+      const { data } = await axios.post(`${API_BASE_URL}/login`, {
+        email,
+        password,
+      });
+      return data;
+    } catch {
+      throw new Error("Login failed");
+    }
+  }
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema: loginSchema,
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      try {
+        setSubmitting(true);
+
+        const data = await loginUser(values.email, values.password);
+        localStorage.setItem("token", data.token);
+        navigate("/");
+      } catch (error) {
+        setErrors({ email: error.message });
+      } finally {
+        setSubmitting(false);
+      }
+    }
   });
 
   return (

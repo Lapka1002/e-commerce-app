@@ -7,6 +7,7 @@ import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProductDetails from './pages/ProductDetails'
+import Favorites from './pages/Favorites';
 
 const AppRoutes = () => {
     return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
             <Route path="/checkout" element={<Checkout/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/favorite" element={<Favorites />} />
             <Route path="/products/:id" element={<ProductDetails />} />
         </Routes>
     )

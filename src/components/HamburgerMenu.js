@@ -102,6 +102,18 @@ const HamburgerMenu = () => {
             </li>
             <li>
               <NavLink
+                to="/favorite"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                    : "hover:text-blue-600 transition duration-300"
+                }
+              >
+                Favorites
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/cart"
                 className={({ isActive }) =>
                   isActive
