@@ -31,7 +31,7 @@ const Favorites = () => {
                                             <div>
                                                 <button
                                                     onClick={() => removeItemFromFavorites(item.id)}
-                                                    className="text-red-500 hover:text-red-700 font-semibold">
+                                                    className="text-red-500 hover:text-red-700 font-semibold mr-3">
                                                     Remove
                                                 </button>
                                                 <button

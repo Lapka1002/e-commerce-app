@@ -7,10 +7,15 @@ import 'swiper/css/navigation';
 import { useShoppingCart } from "../contexts/CartContext";
 import { useFavoritesContext } from "../contexts/FavoritesContext";
 
+import { FaHeart } from "react-icons/fa6";
+import { FaRegHeart } from "react-icons/fa";
+
 const ProductCard = ({ product }) => {
 
     const { addItemToCart } = useShoppingCart();
-    const { addItemToFavorites } = useFavoritesContext();
+    const { addItemToFavorites, favoriteItems } = useFavoritesContext();
+
+    const isFavorite = favoriteItems.some((item) => item.id === product.id);
 
     const images = product.images || [];
 
@@ -62,16 +67,18 @@ const ProductCard = ({ product }) => {
                     <p className="text-lg text-gray-600 my-3">{product.description}</p>
                     <p className="text-2xl font-semibold text-blue-600">${product.price}</p>
                 </div>
-                <button
+                <div className="flex justify-end">
+                    <button
                         onClick={() => addItemToFavorites(product)}
-                        className="mt-4 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition-all">
-                        Add to Favorites
+                        className="mr-3 px-6 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition-all">
+                        {isFavorite ? <FaHeart /> : <FaRegHeart />}
                     </button>
-                <button
-                    onClick={() => addItemToCart(product)}
-                    className="mt-4 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-all">
-                    Add to cart
-                </button>
+                    <button
+                        onClick={() => addItemToCart(product)}
+                        className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-all">
+                        Add to cart
+                    </button>
+                </div>
             </div>
         </div>
     )
