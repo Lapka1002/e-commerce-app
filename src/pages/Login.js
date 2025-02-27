@@ -1,45 +1,51 @@
 import React from "react";
 import { useFormik } from "formik";
-import loginSchema from "../validationSchemas/loginValidationSchema";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const API_BASE_URL = "https://dummyjson.com/auth";
-
-  const loginUser = async (email, password) => {
+  const loginUser = async (username, password) => {
     try {
-      const { data } = await axios.post(`${API_BASE_URL}/login`, {
-        email,
-        password,
+      const response = await fetch("https://dummyjson.com/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password,
+        })
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
+
+      const data = await response.json();
       return data;
-    } catch {
-      throw new Error("Login failed");
+    } catch (error) {
+      throw new Error(error.message);
     }
-  }
+  };
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
     },
-    validationSchema: loginSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         setSubmitting(true);
 
-        const data = await loginUser(values.email, values.password);
-        localStorage.setItem("token", data.token);
-        navigate("/");
+        const data = await loginUser(values.username, values.password);
+        localStorage.setItem("token", data.token); // Сохраняем токен
+        navigate("/"); // Перенаправляем на главную страницу
       } catch (error) {
-        setErrors({ email: error.message });
+        setErrors({ username: error.message }); // Показываем ошибку
       } finally {
         setSubmitting(false);
       }
-    }
+    },
   });
 
   return (
@@ -51,15 +57,15 @@ const Login = () => {
         <h2 className="text-2xl font-bold mb-4">Login</h2>
 
         <input
-          type="email"
-          name="email"
-          placeholder="Email"
+          type="text"
+          name="username"
+          placeholder="Username"
           className="w-full p-2 border rounded mb-2"
           onChange={formik.handleChange}
-          value={formik.values.email}
+          value={formik.values.username}
         />
-        {formik.errors.email && (
-          <p className="text-red-500">{formik.errors.email}</p>
+        {formik.errors.username && (
+          <p className="text-red-500">{formik.errors.username}</p>
         )}
 
         <input
@@ -77,8 +83,9 @@ const Login = () => {
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded"
+          disabled={formik.isSubmitting}
         >
-          Login
+          {formik.isSubmitting ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
@@ -86,3 +93,5 @@ const Login = () => {
 };
 
 export default Login;
+
+
