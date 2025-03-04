@@ -33,7 +33,7 @@ const ProductDetails = () => {
         closePopup();
       }
     };
-  }, [closePopup]);
+  }, [isModalOpen, closePopup]);
 
   const reviews = product?.reviews || [];
 

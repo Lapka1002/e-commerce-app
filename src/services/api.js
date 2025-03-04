@@ -9,14 +9,16 @@ export const fetchProducts = async (
   limit = 9
 ) => {
   try {
-    let url = `${API_BASE_URL}?limit=${limit}&skip=${skip}`;
+    const url = new URL(category ? `${API_BASE_URL}/category/${category}` : API_BASE_URL);
+    url.searchParams.append("limit", limit);
+    url.searchParams.append("skip", skip);
+    url.searchParams.append("minPrice", minPrice);
+    url.searchParams.append("maxPrice", maxPrice);
 
-    if (category) {
-      url = `${API_BASE_URL}/category/${category}?limit=${limit}&skip=${skip}`;
-    }
-    const responce = await fetch(url);
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Failed to fetch products");
 
-    const data = await responce.json();
+    const data = await response.json();
 
     const filteredProducts = data.products.filter(product =>
       product.price >= minPrice && product.price <= maxPrice
@@ -31,8 +33,8 @@ export const fetchProducts = async (
 //fetch product by id
 export const fetchProductById = async (id) => {
   try {
-    const responce = await fetch(`${API_BASE_URL}/${id}`);
-    const data = await responce.json();
+    const response = await fetch(`${API_BASE_URL}/${id}`);
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching product:", error);
@@ -43,8 +45,8 @@ export const fetchProductById = async (id) => {
 //fetch category
 export const fetchCategories = async () => {
   try {
-    const responce = await fetch(`${API_BASE_URL}/categories`);
-    const data = await responce.json();
+    const response = await fetch(`${API_BASE_URL}/categories`);
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching categories:", error);

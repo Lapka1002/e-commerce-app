@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { fetchProducts, fetchCategories } from "../services/api";
 import { Link } from "react-router-dom";
 
@@ -7,21 +7,21 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000);
+  const [minPrice, setMinPrice] = useState("0");
+  const [maxPrice, setMaxPrice] = useState("1000");
   const [page, setPage] = useState(1);
   const limit = 9;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true);
       const [productsData, categoriesData] = await Promise.all([
         fetchProducts(
           selectedCategory,
-          minPrice,
-          maxPrice,
+          minPrice === "" ? 0 : minPrice,
+          maxPrice === "" ? 1000 : maxPrice,
           (page - 1) * limit,
           limit
         ),
@@ -34,12 +34,24 @@ const Products = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory, minPrice, maxPrice, page]);
+
 
   useEffect(() => {
     loadData();
-  }, [selectedCategory, minPrice, maxPrice, page]);
+  }, [loadData]);
 
+
+  const handleMinPriceChange = (e) => {
+    const value = e.target.value;
+    setMinPrice(value === "" ? "" : parseInt(value));
+  };
+  
+  const handleMaxPriceChange = (e) => {
+    const value = e.target.value;
+    setMaxPrice(value === "" ? "" : parseInt(value));
+  };
+  
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Products</h1>
@@ -59,17 +71,17 @@ const Products = () => {
         <input
           type="number"
           className="border p-2"
-          placeholder="Min Price"
+          placeholder="Min price"
           value={minPrice}
-          onChange={(e) => setMinPrice(Number(e.target.value))}
+          onChange={handleMinPriceChange}
         />
 
         <input
           type="number"
           className="border p-2"
-          placeholder="Max Price"
+          placeholder="Max price"
           value={maxPrice}
-          onChange={(e) => setMaxPrice(Number(e.target.value))}
+          onChange={handleMaxPriceChange}
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
