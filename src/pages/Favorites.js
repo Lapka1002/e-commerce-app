@@ -55,10 +55,10 @@ const Favorites = () => {
                         </div>
                     </div>
                 ) : (
-                    <p className="text-center text-gray-600 text-lg py-20">
+                    <div className="text-center text-gray-600 text-lg py-20">
                         <FaHeartBroken className="w-12 h-12 mx-auto text-gray-400" />
                         <p className="mt-4">Your favorites are empty.</p>
-                    </p>
+                    </div>
                 )}
         </div>
     );

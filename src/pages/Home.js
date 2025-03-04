@@ -4,6 +4,8 @@ import { fetchProducts, fetchCategories } from "../services/api";
 import { Link } from "react-router-dom";
 
 import CartButton from '../button/CartButton'
+import Banner from '../components/Banner'
+import CategoriesSection from '../components/CategoriesSection'
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -34,7 +36,7 @@ const Home = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
-        <div className="text-xl text-gray-700">Загрузка...</div>
+        <div className="text-xl text-gray-700">Loading...</div>
       </div>
     );
   } else if (error) {
@@ -46,28 +48,12 @@ const Home = () => {
   } else {
     return (
       <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Welcome to Our Store  <CartButton/>
-        </h1>
+        <CartButton />
+        <section className="mb-12">
+        <CategoriesSection categories={categories} />
+        </section>
         <section>
-          <div>
-            <h3 className="text-2xl font-bold text-gray-800">Categories</h3>
-            <ul className="flex flex-wrap space-x-4 mt-4">
-              {categories.map((category, index) => (
-                <li
-                key={index}
-                className="text-lg cursor-pointer text-gray-700"
-              >
-                <Link
-                  to={`/products?category=${category.name}`}
-                  className="hover:text-blue-500"
-                >
-                  {category.name}
-                </Link>
-              </li>
-              ))}
-            </ul>
-          </div>
+          <Banner />
         </section>
         <section>
           <h2 className="my-8 text-2xl font-bold text-gray-800">
