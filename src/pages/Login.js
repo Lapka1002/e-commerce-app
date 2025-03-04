@@ -2,9 +2,13 @@ import React from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 
+import { useAuth } from "../contexts/AuthContext";
+
 const Login = () => {
   const navigate = useNavigate();
 
+  const {login} = useAuth();
+ 
   const loginUser = async (username, password) => {
     try {
       const response = await fetch("https://dummyjson.com/auth/login", {
@@ -38,10 +42,10 @@ const Login = () => {
         setSubmitting(true);
 
         const data = await loginUser(values.username, values.password);
-        localStorage.setItem("token", data.token); // Сохраняем токен
-        navigate("/"); // Перенаправляем на главную страницу
+        login(data.token);
+        navigate("/");
       } catch (error) {
-        setErrors({ username: error.message }); // Показываем ошибку
+        setErrors({ username: error.message }); 
       } finally {
         setSubmitting(false);
       }

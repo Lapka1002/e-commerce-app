@@ -1,9 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, NavLink } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes";
 
-import { ShoppingCartProvider } from "./contexts/CartContext";
-import { FavoritesProvider } from "./contexts/FavoritesContext";
+import AppProviders from "./contexts/AppProviders";
 
 import CartIconLayout from './layouts/CartIconLayout';
 import HamburgerMenu from "./components/HamburgerMenu";
@@ -12,16 +11,14 @@ import "./styles/tailwind.css";
 
 const App = () => {
   return (
-    <ShoppingCartProvider>
-      <FavoritesProvider>
-        <Router>
-          <CartIconLayout>
-            <HamburgerMenu />
-            <AppRoutes />
-          </CartIconLayout>
-        </Router>
-      </FavoritesProvider>
-    </ShoppingCartProvider>
+    <AppProviders>
+      <Router>
+        <CartIconLayout>
+          <HamburgerMenu />
+          <AppRoutes />
+        </CartIconLayout>
+      </Router>
+    </AppProviders>
   );
 };
 

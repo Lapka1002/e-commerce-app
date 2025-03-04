@@ -1,8 +1,17 @@
+import { useAuth } from "../contexts/AuthContext"; // правильный путь
 import React, { useState } from "react";
 import Hamburger from "hamburger-react";
 import { NavLink } from "react-router-dom";
+
 const HamburgerMenu = () => {
+  const { user, logout } = useAuth();  // используем контекст
   const [isOpen, setOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    setOpen(false); // Закрыть меню при выходе
+  };
+
   return (
     <div>
       <div className="md:hidden">
@@ -35,6 +44,18 @@ const HamburgerMenu = () => {
             </li>
             <li>
               <NavLink
+                to="/favorite"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                    : "hover:text-blue-600 transition duration-300"
+                }
+              >
+                Favorites
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/cart"
                 className={({ isActive }) =>
                   isActive
@@ -45,30 +66,42 @@ const HamburgerMenu = () => {
                 Cart
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                    : "hover:text-blue-600 transition duration-300"
-                }
-              >
-                Log In
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/register"
-                className={({ isActive }) =>
-                  isActive
-                    ? "bg-blue-700 text-white px-4 py-2 rounded-lg"
-                    : "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
-                }
-              >
-                Join Now
-              </NavLink>
-            </li>
+            {user ? (
+              <li>
+                <button
+                  className={"bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300"}
+                  onClick={handleLogout}
+                >Logout
+                </button>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                        : "hover:text-blue-600 transition duration-300"
+                    }
+                  >
+                    Log In
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/register"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "bg-blue-700 text-white px-4 py-2 rounded-lg"
+                        : "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+                    }
+                  >
+                    Join Now
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
         )}
       </div>
@@ -124,34 +157,47 @@ const HamburgerMenu = () => {
                 Cart
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                    : "hover:text-blue-600 transition duration-300"
-                }
-              >
-                Log In
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/register"
-                className={({ isActive }) =>
-                  isActive
-                    ? "bg-blue-700 text-white px-4 py-2 rounded-lg"
-                    : "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
-                }
-              >
-                Join Now
-              </NavLink>
-            </li>
+            {user ? (
+              <li>
+                <button
+                  className={"bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300"}
+                  onClick={handleLogout}
+                >Logout
+                </button>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                        : "hover:text-blue-600 transition duration-300"
+                    }
+                  >
+                    Log In
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/register"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "bg-blue-700 text-white px-4 py-2 rounded-lg"
+                        : "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+                    }
+                  >
+                    Join Now
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </nav>
     </div>
   );
 };
- export default HamburgerMenu;
+
+export default HamburgerMenu;
