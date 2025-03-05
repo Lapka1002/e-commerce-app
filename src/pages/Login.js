@@ -45,7 +45,7 @@ const Login = () => {
         login(data.token);
         navigate("/");
       } catch (error) {
-        setErrors({ username: error.message }); 
+        setErrors({ general: error.message }); 
       } finally {
         setSubmitting(false);
       }
@@ -59,7 +59,9 @@ const Login = () => {
         className="bg-white p-6 rounded shadow-md w-96"
       >
         <h2 className="text-2xl font-bold mb-4">Login</h2>
-
+        {formik.errors.general && (
+        <div className="text-red-500 mb-4">{formik.errors.general}</div>
+      )}
         <input
           type="text"
           name="username"

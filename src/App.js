@@ -5,7 +5,7 @@ import AppRoutes from "./routes";
 import AppProviders from "./contexts/AppProviders";
 
 import CartIconLayout from './layouts/CartIconLayout';
-import HamburgerMenu from "./components/HamburgerMenu";
+import Header from "./components/Header";
 
 import "./styles/tailwind.css";
 
@@ -14,7 +14,7 @@ const App = () => {
     <AppProviders>
       <Router>
         <CartIconLayout>
-          <HamburgerMenu />
+          <Header />
           <AppRoutes />
         </CartIconLayout>
       </Router>
