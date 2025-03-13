@@ -4,7 +4,7 @@ import Hamburger from "hamburger-react";
 import { NavLink } from "react-router-dom";
 
 const HamburgerMenu = () => {
-  const { user, logout } = useAuth();  // используем контекст
+  const { user, logout } = useAuth(); // используем контекст
   const [isOpen, setOpen] = useState(false);
 
   const handleLogout = () => {
@@ -69,9 +69,12 @@ const HamburgerMenu = () => {
             {user ? (
               <li>
                 <button
-                  className={"bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300"}
+                  className={
+                    "bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300"
+                  }
                   onClick={handleLogout}
-                >Logout
+                >
+                  Logout
                 </button>
               </li>
             ) : (
@@ -158,13 +161,30 @@ const HamburgerMenu = () => {
               </NavLink>
             </li>
             {user ? (
-              <li>
-                <button
-                  className={"bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300"}
-                  onClick={handleLogout}
-                >Logout
-                </button>
-              </li>
+              <>
+                <li>
+                  <NavLink
+                    to="/profile"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                        : "hover:text-blue-600 transition duration-300"
+                    }
+                  >
+                    Profile
+                  </NavLink>
+                </li>
+                <li>
+                  <button
+                    className={
+                      "bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300"
+                    }
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
             ) : (
               <>
                 <li>

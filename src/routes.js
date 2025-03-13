@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ProductDetails from './pages/ProductDetails'
 import Favorites from './pages/Favorites';
+import Profile from './pages/Profile';
 
 const AppRoutes = () => {
     return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/favorite" element={<Favorites />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/products/:id" element={<ProductDetails />} />
         </Routes>
     )

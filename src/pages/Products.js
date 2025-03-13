@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { fetchProducts, fetchCategories } from "../services/api";
-import { Link } from "react-router-dom";
-import Spinner from '../components/Spinner'
+import { Link, useSearchParams } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [page, setPage] = useState(1);
   const limit = 9;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryFromUrl = searchParams.get("category") || "";
+  const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl);
 
   const loadData = useCallback(async () => {
     try {
@@ -37,14 +39,29 @@ const Products = () => {
   }, [selectedCategory, minPrice, maxPrice, page]);
 
   useEffect(() => {
+    setSelectedCategory(categoryFromUrl);
+  }, [categoryFromUrl]);
+
+  useEffect(() => {
     loadData();
   }, [loadData]);
 
+  const handleCategoryChange = (e) => {
+    const newCategory = e.target.value;
+    setSelectedCategory(newCategory);
+
+    setSearchParams((prevParams) => {
+      if (newCategory) {
+        prevParams.set("category", newCategory);
+      } else {
+        prevParams.delete("category");
+      }
+      return prevParams;
+    });
+  };
 
   if (loading) {
-    return (
-      <Spinner />
-    );
+    return <Spinner />;
   } else if (error) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -61,7 +78,7 @@ const Products = () => {
           <select
             className="border p-3 rounded shadow-md text-gray-700 focus:ring focus:ring-blue-300"
             value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+            onChange={handleCategoryChange}
           >
             <option value="">All Categories</option>
             {categories.map((category, index) => (
@@ -106,7 +123,9 @@ const Products = () => {
                     <h2 className="text-lg font-semibold text-gray-800">
                       {product.title}
                     </h2>
-                    <p className="text-blue-600 font-bold mt-2">${product.price}</p>
+                    <p className="text-blue-600 font-bold mt-2">
+                      ${product.price}
+                    </p>
                   </div>
                 </Link>
               </div>

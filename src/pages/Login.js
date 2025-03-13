@@ -42,7 +42,8 @@ const Login = () => {
         setSubmitting(true);
 
         const data = await loginUser(values.username, values.password);
-        login(data.token);
+        console.log("Login API response:", data);
+        login(data.accessToken, data.id); 
         navigate("/");
       } catch (error) {
         setErrors({ general: error.message }); 
