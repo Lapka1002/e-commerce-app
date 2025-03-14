@@ -4,7 +4,11 @@ import { FaUser, FaBox, FaLock } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext";
 import ProfileSection from "../components/ProfileSection";
 import OrdersSection from "../components/OrderSection";
+import SecuritySection from "../components/SecuritySection";
 import Spinner from "../components/Spinner";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("profile");
@@ -13,13 +17,15 @@ const Profile = () => {
 
   const handleSave = async (updateUserInfo) => {
     try {
-      const res = fetch(`https://dummyjson.com/users/${userInfo.id}`, {
+      const res = await fetch(`https://dummyjson.com/users/${userInfo.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updateUserInfo),
       });
       if (!res.ok) throw new Error("Error updating user data");
-    } catch {}
+    } catch (error) {
+      toast.error("Failed to update profile.");
+    }
   };
 
   if (!userInfo) {
@@ -82,21 +88,17 @@ const Profile = () => {
         </nav>
       </aside>
       <main className="flex-1 p-6">
-        {activeTab === "profile" && <ProfileSection userInfo={userInfo} onSave={handleSave}/>}
+        {activeTab === "profile" && (
+          <ProfileSection userInfo={userInfo} onSave={handleSave} />
+        )}
         {activeTab === "orders" && <OrdersSection userInfo={userInfo} />}
         {/* {activeTab === "address" && <AddressSection />} */}
-        {activeTab === "security" && <SecuritySection userInfo={userInfo} />}
+        {activeTab === "security" && (
+          <SecuritySection userInfo={userInfo} onSave={handleSave} />
+        )}
       </main>
     </div>
   );
 };
-
-
-const SecuritySection = () => (
-  <div className="bg-white p-6 rounded-lg shadow-md">
-    <h2 className="text-xl font-semibold mb-4">Security</h2>
-    {/* Здесь будет смена пароля */}
-  </div>
-);
 
 export default Profile;

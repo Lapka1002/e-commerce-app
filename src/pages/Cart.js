@@ -3,9 +3,12 @@ import React from "react";
 import { useShoppingCart } from "../contexts/CartContext";
 import { Link } from "react-router-dom";
 
+import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+
 
 const Cart = () => {
   const { cartItems, removeItemFromCart, totalPrice, updateItemQuantity, totalItems } = useShoppingCart();
+
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -21,16 +24,17 @@ const Cart = () => {
                   <img
                     src={item.thumbnail}
                     alt={item.title}
+                    loading="lazy"
                     className="h-32 object-cover rounded-md "
                   />
                   <div>
                     <h3 className="text-lg font-semibold text-gray-800">{item.title}</h3>
-                    <p className="text-gray-600 text-sm mt-1">{item.description}</p>
+                    <p className="text-gray-600 text-sm mt-1 mr-4">{item.description}</p>
                     <p className="text-sm text-gray-500 mt-2">Price: ${item.price}</p>
                   </div>
                 </div>
-                <div className="text-center">
-                  <div className="flex items-center space-x-3 mb-4">
+                <div className="text-center flex flex-col">
+                  <div className="flex items-center mb-4">
                     <button
                       onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
                       disabled={item.quantity === 1}
@@ -38,21 +42,22 @@ const Cart = () => {
                         ? 'bg-gray-100 cursor-not-allowed'
                         : 'hover:bg-gray-200'}`}
                     >
-                      -
+                      <FaMinus />
                     </button>
-                    <span className="font-semibold text-lg">{item.quantity}</span>
+                    <span className="font-semibold mx-3 text-lg">{item.quantity}</span>
                     <button
                       onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
                       className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                     >
-                      +
+                       <FaPlus />
                     </button>
                   </div>
                   <button
                     onClick={() => removeItemFromCart(item.id)}
-                    className="text-red-500 hover:underline text-sm"
+                    className="text-red-500 hover:underline text-sm ml-auto flex"
                   >
-                    Remove
+                    <span>Remove</span>
+                    <FaTrash className="ml-2" />
                   </button>
                 </div>
               </li>
@@ -81,7 +86,7 @@ const Cart = () => {
             </Link>
           </div>
           <p className="text-center text-sm text-gray-500 mt-4">
-            or <Link to="/shop" className="text-blue-500 hover:underline">Continue Shopping</Link>
+            or <Link to="/products" className="text-blue-500 hover:underline">Continue Shopping</Link>
           </p>
         </>
       ) : (

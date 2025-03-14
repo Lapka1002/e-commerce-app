@@ -1,88 +1,83 @@
-import { useState, useContext, createContext, useEffect } from "react";
+import { useState, useContext, createContext, useEffect, useCallback } from "react";
 
 const ShoppingCartContext = createContext();
 
 export const useShoppingCart = () => useContext(ShoppingCartContext);
 
 export const ShoppingCartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState(() => {
+    const storedCart = localStorage.getItem("cartItems");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [cartItems, setCartItems] = useState(() => {
-        const storedCart = localStorage.getItem("cartItems");
-        return storedCart ? JSON.parse(storedCart) : [];
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const addItemToCart = useCallback((item) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((i) => i.id === item.id);
+      if (existingItem) {
+        return prevItems.map((i) =>
+          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+        );
+      } else {
+        return [...prevItems, { ...item, quantity: 1 }];
+      }
     });
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    useEffect(() => {
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-      }, [cartItems]);
+    setIsModalOpen(true);
+  }, []);
 
-    const addItemToCart = (item) => {
+  const closePopup = () => {
+    setIsModalOpen(false);
+  };
 
-        //add product to cart
-        setCartItems((prevItems) => {
-            const existingItem = prevItems.find((i) => i.id === item.id);
-            if (existingItem) {
-                return prevItems.map((i) =>
-                    i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-                );
-            } else {
-                return [...prevItems, { ...item, quantity: 1 }];
-            }
-        });
+  //delete product from cart
+  const removeItemFromCart = useCallback((id) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  }, []);
 
-        setIsModalOpen(true);
-    }
+  //update quantity
+  const updateItemQuantity = useCallback((id, quantity) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) => (item.id === id ? { ...item, quantity } : item))
+    );
+  }, []);
 
-    const closePopup = () => {
-        setIsModalOpen(false);
-      };
+  //clear cart
+  const clearCart = useCallback(() => {
+    setCartItems([]);
+  }, []);
 
-    //delete product from cart 
-    const removeItemFromCart = (id) => {
-        setCartItems((prevItems) =>
-            prevItems.filter((item) => item.id !== id)
-        )
-    }
+  //Calculate the total number of products
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-    //update quantity
-    const updateItemQuantity = (id, quantity) => {
-        setCartItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === id ? { ...item, quantity } : item
-            )
-        )
-    }
+  //calc the total price
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
-    //clear cart 
-    const clearCart = () => {
-        setCartItems([]);
-    };
-
-    //Calculate the total number of products
-    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
-    //calc the total price
-    const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-
-    return (
-        <ShoppingCartContext.Provider
-            value={{
-                cartItems,
-                addItemToCart,
-                removeItemFromCart,
-                updateItemQuantity,
-                clearCart,
-                totalItems,
-                setIsModalOpen,
-                closePopup,
-                totalPrice,
-                isModalOpen
-            }}
-        >
-            {children}
-        </ShoppingCartContext.Provider>
-    )
-}
-
+  return (
+    <ShoppingCartContext.Provider
+      value={{
+        cartItems,
+        addItemToCart,
+        removeItemFromCart,
+        updateItemQuantity,
+        clearCart,
+        totalItems,
+        setIsModalOpen,
+        closePopup,
+        totalPrice,
+        isModalOpen,
+      }}
+    >
+      {children}
+    </ShoppingCartContext.Provider>
+  );
+};
 
 export default ShoppingCartContext;

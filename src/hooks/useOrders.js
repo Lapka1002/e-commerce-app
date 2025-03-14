@@ -14,7 +14,8 @@ const useOrders = (userId) => {
       if (!res.ok) throw new Error("Error fetching orders");
 
       const data = await res.json();
-      const userOrders = data.carts.filter((order) => order.id === userId);
+
+      const userOrders = data.carts.filter((order) => order.userId === userId);
       setOrders(userOrders);
     } catch (error) {
       setError(error.message);
@@ -24,8 +25,10 @@ const useOrders = (userId) => {
   };
 
   useEffect(() => {
-    fetchOrders();
-  }, []);
+    if (userId) {
+      fetchOrders();
+    }
+  }, [userId]);
 
   return { orders, loading, error };
 };

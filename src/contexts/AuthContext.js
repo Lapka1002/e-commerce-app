@@ -15,12 +15,13 @@ export const AuthProvider = ({ children }) => {
       setUser({ token, userId: storedUserId });
       fetchUserInfo(storedUserId);
     }
-  }, []);
+  }, [token, storedUserId]);
+
   const fetchUserInfo = async (userId) => {
     try {
       const res = await fetch(`https://dummyjson.com/users/${userId}`);
       if (!res.ok) throw new Error("Error receiving user data");
-  
+
       const data = await res.json();
       setUserInfo(data);
     } catch (error) {
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }) => {
       setUserInfo(null);
     }
   };
+
   const updateUserInfo = (newUserInfo) => {
     setUserInfo(newUserInfo);
   };
@@ -41,7 +43,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("token", token);
     localStorage.setItem("userId", userId);
 
-    fetchUserInfo(userId); 
+    fetchUserInfo(userId);
   };
 
   const logout = () => {
@@ -52,7 +54,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, userInfo, updateUserInfo }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, userInfo, updateUserInfo }}
+    >
       {children}
     </AuthContext.Provider>
   );

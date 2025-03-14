@@ -1,15 +1,23 @@
 import { useAuth } from "../contexts/AuthContext"; // правильный путь
 import React, { useState } from "react";
 import Hamburger from "hamburger-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useShoppingCart } from "../contexts/CartContext";
+
 
 const HamburgerMenu = () => {
-  const { user, logout } = useAuth(); // используем контекст
+  const { user, logout } = useAuth(); 
   const [isOpen, setOpen] = useState(false);
+
+   const navigate = useNavigate();
+
+   const { totalItems } = useShoppingCart();
+  
 
   const handleLogout = () => {
     logout();
-    setOpen(false); // Закрыть меню при выходе
+    setOpen(false); 
+    navigate("/");
   };
 
   return (
@@ -59,10 +67,11 @@ const HamburgerMenu = () => {
                 to="/cart"
                 className={({ isActive }) =>
                   isActive
-                    ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                    ? "text-blue-600 border-b-2 border-blue-600 pb-1 relative"
                     : "hover:text-blue-600 transition duration-300"
                 }
               >
+                {totalItems > 0 ? <div className="absolute top-[2px] right-[2px] bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{totalItems}</div> : ``}
                 Cart
               </NavLink>
             </li>
@@ -149,14 +158,15 @@ const HamburgerMenu = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink
+            <NavLink
                 to="/cart"
                 className={({ isActive }) =>
                   isActive
-                    ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                    ? "text-blue-600 border-b-2 border-blue-600 pb-1 relative"
                     : "hover:text-blue-600 transition duration-300"
                 }
               >
+                {totalItems > 0 ? <div className="absolute top-[-13px] right-[-13px] bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{totalItems}</div> : ``}
                 Cart
               </NavLink>
             </li>

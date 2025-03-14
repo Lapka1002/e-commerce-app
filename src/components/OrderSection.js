@@ -1,10 +1,10 @@
 import useOrders from "../hooks/useOrders";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext"; 
 
 const OrdersSection = () => {
-  const { userInfo } = useAuth();
-  const userId = userInfo.id;
-  const { orders, loading, error } = useOrders(userId);
+  const { userInfo } = useAuth(); 
+  const userId = userInfo?.id; 
+  const { orders, loading, error } = useOrders(userId); 
 
   if (loading) return <p>Loading orders...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -17,16 +17,14 @@ const OrdersSection = () => {
           {orders.map((order) => (
             <div key={order.id} className="border-b pb-4">
               <p className="text-lg font-medium text-gray-900">
-                Total: ${order.total} (Discounted: `$
-                {order.discountedTotal.toFixed(2)}`)
+                Total: ${order.total.toFixed(2)} (Discounted: ${order.discountedTotal.toFixed(2)})
               </p>
               <div className="mt-2">
                 <p className="text-gray-500 text-sm">Products:</p>
                 <ul className="list-disc pl-5">
                   {order.products.map((product) => (
                     <li key={product.id} className="text-gray-700">
-                      {product.title} (x{product.quantity}) - `$
-                      {product.total.toFixed(2)}`
+                      {product.title} (x{product.quantity}) - ${product.total.toFixed(2)}
                     </li>
                   ))}
                 </ul>

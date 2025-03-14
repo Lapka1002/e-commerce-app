@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { useShoppingCart } from "../contexts/CartContext";
-
+import { useAuth } from "../contexts/AuthContext";
 import checkoutValidatonSchema from "../validationSchemas/checkoutValidationSchema";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Checkout = () => {
   const { cartItems, totalPrice } = useShoppingCart();
+
+  const { userInfo } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -26,9 +31,31 @@ const Checkout = () => {
     },
     validationSchema: checkoutValidatonSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      toast.success("Order placed successfully!");
+      console.log("Form data:", values);
     },
   });
+
+  useEffect(() => {
+    if (userInfo) {
+      formik.setValues({
+        firstName: userInfo.firstName || "",
+        lastName: userInfo.lastName || "",
+        email: userInfo.email || "",
+        phone: userInfo.phone || "",
+        cardName: "",
+        cardNumber: "",
+        expiry: "",
+        cvc: "",
+        company: "",
+        address: userInfo.address?.address || "",
+        apartment: "",
+        city: userInfo.address?.city || "",
+        state: userInfo.address?.state || "",
+        postalCode: userInfo.address?.postalCode || "",
+      });
+    }
+  }, [userInfo]);
 
   const renderError = (field) =>
     formik.touched[field] && formik.errors[field] ? (
@@ -38,7 +65,6 @@ const Checkout = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center">
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-        {/* Contact Information */}
         <div>
           <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
           <form onSubmit={formik.handleSubmit} className="space-y-6">
@@ -58,7 +84,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.email}
                 />
-                {renderError('email')}
+                {renderError("email")}
               </div>
               <div className="w-1/2">
                 <label
@@ -75,7 +101,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.phone}
                 />
-                {renderError('phone')}
+                {renderError("phone")}
               </div>
             </div>
             <div className="flex space-x-4">
@@ -94,7 +120,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.firstName}
                 />
-                {renderError('firstName')}
+                {renderError("firstName")}
               </div>
               <div className="w-1/2">
                 <label
@@ -111,7 +137,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.lastName}
                 />
-                {renderError('lastName')}
+                {renderError("lastName")}
               </div>
             </div>
 
@@ -131,7 +157,7 @@ const Checkout = () => {
                 onChange={formik.handleChange}
                 value={formik.values.cardName}
               />
-              {renderError('cardName')}
+              {renderError("cardName")}
             </div>
             <div>
               <label
@@ -148,7 +174,7 @@ const Checkout = () => {
                 onChange={formik.handleChange}
                 value={formik.values.cardNumber}
               />
-              {renderError('cardNumber')}
+              {renderError("cardNumber")}
             </div>
             <div className="flex space-x-4">
               <div className="w-1/2">
@@ -166,7 +192,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.expiry}
                 />
-                {renderError('expiry')}
+                {renderError("expiry")}
               </div>
               <div className="w-1/2">
                 <label
@@ -183,7 +209,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.cvc}
                 />
-                {renderError('cvc')}
+                {renderError("cvc")}
               </div>
             </div>
 
@@ -219,7 +245,7 @@ const Checkout = () => {
                 onChange={formik.handleChange}
                 value={formik.values.address}
               />
-              {renderError('address')}
+              {renderError("address")}
             </div>
             <div>
               <label
@@ -253,7 +279,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.city}
                 />
-                {renderError('city')}
+                {renderError("city")}
               </div>
               <div className="w-1/3">
                 <label
@@ -270,7 +296,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.state}
                 />
-                {renderError('state')}
+                {renderError("state")}
               </div>
               <div className="w-1/3">
                 <label
@@ -287,7 +313,7 @@ const Checkout = () => {
                   onChange={formik.handleChange}
                   value={formik.values.postalCode}
                 />
-                {renderError('postalCode')}
+                {renderError("postalCode")}
               </div>
             </div>
             <button
