@@ -6,6 +6,7 @@ import AppProviders from "./contexts/AppProviders";
 
 import CartIconLayout from './layouts/CartIconLayout';
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import "./styles/tailwind.css";
 
@@ -16,6 +17,7 @@ const App = () => {
         <CartIconLayout>
           <Header />
           <AppRoutes />
+          <Footer />
         </CartIconLayout>
       </Router>
     </AppProviders>

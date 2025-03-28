@@ -15,6 +15,7 @@ const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryFromUrl = searchParams.get("category") || "";
   const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const loadData = useCallback(async () => {
     try {
@@ -25,7 +26,8 @@ const Products = () => {
           minPrice || 0,
           maxPrice || 1000,
           (page - 1) * limit,
-          limit
+          limit,
+          searchQuery
         ),
         fetchCategories(),
       ]);
@@ -60,6 +62,14 @@ const Products = () => {
     });
   };
 
+  const handleSearchQuery = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredProducts = products.filter((product) =>
+    product.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) {
     return <Spinner />;
   } else if (error) {
@@ -75,6 +85,13 @@ const Products = () => {
           Our Products
         </h1>
         <div className="flex flex-wrap justify-center gap-4 mb-6">
+        <input
+        type="search"
+        placeholder="Search for..."
+        value={searchQuery}
+        onChange={handleSearchQuery}
+        className=" p-2 border rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
           <select
             className="border p-3 rounded shadow-md text-gray-700 focus:ring focus:ring-blue-300"
             value={selectedCategory}
@@ -108,7 +125,7 @@ const Products = () => {
           <p className="text-center text-red-500">{error}</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <div
                 key={product.id}
                 className="border rounded-lg shadow-lg overflow-hidden bg-white transition-transform transform hover:scale-105 hover:shadow-xl"
