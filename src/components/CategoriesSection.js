@@ -13,7 +13,7 @@ import "../index.css";
 const CategoriesSection = ({ categories }) => {
     return (
         <div className="relative overflow-visible">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Categories</h3>
+               <h3 className="text-3xl font-bold text-gray-800 mb-6 text-center">Shop by Category</h3>
             <Swiper
                 spaceBetween={20}
                 modules={[Navigation, Pagination]}
@@ -23,17 +23,17 @@ const CategoriesSection = ({ categories }) => {
                 className="px-4"
             >
                 {categories.map((category, index) => (
-                    <SwiperSlide key={index} className="text-lg cursor-pointer text-gray-700 w-fit">
-                        <Link to={`/products?category=${category.name}`} className="hover:text-blue-500">
-                            <span className="font-semibold">{category.name}</span>
+                    <SwiperSlide key={index} className="w-auto">
+                        <Link to={`/products?category=${category.name}`}  className="p-4 text-center">
+                        <span className="text-lg font-semibold text-gray-700 hover:text-blue-600">{category.name}</span>
                         </Link>
                     </SwiperSlide>
                 ))}
             </Swiper>
-            <div className="swiper-button-next absolute right-[-20px] top-[63px] transform z-10">
+            <div className="swiper-button-next absolute right-[-20px] top-[76px] transform z-10">
                 <MdKeyboardArrowRight />
             </div>
-            <div className="swiper-button-prev absolute left-[-10px] top-[63px] transform z-10">
+            <div className="swiper-button-prev absolute left-[-10px] top-[76px] transform z-10">
                 <MdKeyboardArrowLeft />
             </div>
         </div>
