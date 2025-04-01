@@ -18,7 +18,7 @@ const CartIconLayout = ({ children }) => {
     return (
         <div>
             <main>
-                {!hideCartIcon && <CartButton />}
+                {/* {!hideCartIcon && <CartButton />} */}
                 {children}
             </main>
         </div>

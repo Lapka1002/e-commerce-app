@@ -47,7 +47,7 @@ const Home = () => {
   } else {
     return (
       <div className="container mx-auto p-4">
-        <CartButton />
+        {/* <CartButton /> */}
         <section className="my-12">
           <CategoriesSection categories={categories} />
         </section>

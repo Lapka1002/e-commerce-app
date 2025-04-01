@@ -17,7 +17,7 @@ const AddToCartModal = ({ isOpen, closePopup }) => {
             contentLabel="Product has been added to cart"
             className="fixed top-0 right-0 left-0 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
         >
-            <div className="p-4 text-center relative w-full max-w-xl sm:max-w-md bg-white rounded-lg shadow-lg border-black border mx-2">
+            <div className="p-4 text-center relative w-full max-w-xl sm:max-w-md bg-white rounded-lg shadow-lg border-black border mx-2 z-40">
                 <h2 className="text-xl font-semibold mb-4">Product has been added to cart</h2>
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
                     <Link

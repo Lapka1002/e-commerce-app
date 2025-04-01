@@ -19,8 +19,8 @@ const Cart = () => {
             {cartItems.map((item) => (
               <li
                 key={item.id}
-                className="flex items-center justify-between bg-white p-4 border-t border-b border-gray-200">
-                <div className="flex items-center space-x-6">
+                className="flex items-center justify-between bg-white p-4 border-t border-b border-gray-200 flex-col md:flex-row">
+                <div className="flex items-center md:space-x-6 flex-col md:flex-row">
                   <img
                     src={item.thumbnail}
                     alt={item.title}
@@ -33,7 +33,7 @@ const Cart = () => {
                     <p className="text-sm text-gray-500 mt-2">Price: ${item.price}</p>
                   </div>
                 </div>
-                <div className="text-center flex flex-col">
+                <div className="text-center flex flex-col md:mt-0 mt-2">
                   <div className="flex items-center mb-4">
                     <button
                       onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
@@ -54,7 +54,7 @@ const Cart = () => {
                   </div>
                   <button
                     onClick={() => removeItemFromCart(item.id)}
-                    className="text-red-500 hover:underline text-sm ml-auto flex"
+                    className="text-red-500 hover:underline text-sm md:ml-auto flex"
                   >
                     <span>Remove</span>
                     <FaTrash className="ml-2" />

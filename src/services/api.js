@@ -20,10 +20,7 @@ export const fetchProducts = async (
 
     const data = await response.json();
 
-    const filteredProducts = data.products.filter(product =>
-      product.price >= minPrice && product.price <= maxPrice
-    )
-    return filteredProducts;
+    return data.products;
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];

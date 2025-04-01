@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaUser, FaBox, FaLock } from "react-icons/fa";
+import { FaUser, FaBox, FaLock, FaBars } from "react-icons/fa";
 
 import { useAuth } from "../contexts/AuthContext";
 import ProfileSection from "../components/ProfileSection";
@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("profile");
-
+  const [menuOpen, setMenuOpen] = useState(false);
   const { userInfo, updateUserInfo } = useAuth();
 
   const handleSave = async (updateUserInfo) => {
@@ -32,54 +32,39 @@ const Profile = () => {
     return <Spinner />;
   }
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <aside className="w-64 bg-white shadow-md p-4">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+      <button
+        className="md:hidden p-4 bg-blue-500 text-white flex items-center"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <FaBars className="mr-2" /> Menu
+      </button>
+      <aside className={`w-full md:w-64 bg-white shadow-md p-4 md:block ${menuOpen ? "block" : "hidden"}`}>
         <nav>
           <ul className="space-y-4">
             <li>
               <button
-                className={`flex items-center gap-2 w-full p-2 rounded-lg ${
-                  activeTab === "profile"
-                    ? "bg-blue-500 text-white"
-                    : "hover:bg-gray-200"
-                }`}
-                onClick={() => setActiveTab("profile")}
+                className={`flex items-center gap-2 w-full p-2 rounded-lg ${activeTab === "profile" ? "bg-blue-500 text-white" : "hover:bg-gray-200"
+                  }`}
+                onClick={() => { setActiveTab("profile"); setMenuOpen(false); }}
               >
                 <FaUser /> User information
               </button>
             </li>
             <li>
               <button
-                className={`flex items-center gap-2 w-full p-2 rounded-lg ${
-                  activeTab === "orders"
-                    ? "bg-blue-500 text-white"
-                    : "hover:bg-gray-200"
-                }`}
-                onClick={() => setActiveTab("orders")}
+                className={`flex items-center gap-2 w-full p-2 rounded-lg ${activeTab === "orders" ? "bg-blue-500 text-white" : "hover:bg-gray-200"
+                  }`}
+                onClick={() => { setActiveTab("orders"); setMenuOpen(false); }}
               >
                 <FaBox /> Orders
               </button>
             </li>
-            {/* <li>
-              <button
-                className={`flex items-center gap-2 w-full p-2 rounded-lg ${
-                  activeTab === "adress"
-                    ? "bg-blue-500 text-white"
-                    : "hover:bg-gray-200"
-                }`}
-                onClick={() => setActiveTab("address")}
-              >
-                <FaMapMarkerAlt /> Address
-              </button>
-            </li> */}
             <li>
               <button
-                className={`flex items-center gap-2 w-full p-2 rounded-lg ${
-                  activeTab === "security"
-                    ? "bg-blue-500 text-white"
-                    : "hover:bg-gray-200"
-                }`}
-                onClick={() => setActiveTab("security")}
+                className={`flex items-center gap-2 w-full p-2 rounded-lg ${activeTab === "security" ? "bg-blue-500 text-white" : "hover:bg-gray-200"
+                  }`}
+                onClick={() => { setActiveTab("security"); setMenuOpen(false); }}
               >
                 <FaLock /> Security
               </button>
@@ -88,14 +73,9 @@ const Profile = () => {
         </nav>
       </aside>
       <main className="flex-1 p-6">
-        {activeTab === "profile" && (
-          <ProfileSection userInfo={userInfo} onSave={handleSave} />
-        )}
+        {activeTab === "profile" && <ProfileSection userInfo={userInfo} onSave={handleSave} />}
         {activeTab === "orders" && <OrdersSection userInfo={userInfo} />}
-        {/* {activeTab === "address" && <AddressSection />} */}
-        {activeTab === "security" && (
-          <SecuritySection userInfo={userInfo} onSave={handleSave} />
-        )}
+        {activeTab === "security" && <SecuritySection userInfo={userInfo} onSave={handleSave} />}
       </main>
     </div>
   );
