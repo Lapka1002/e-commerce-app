@@ -4,9 +4,9 @@
 
 🛒 **E-Commerce App** is a modern web application for an online store, allowing users to browse products, add them to the cart, place orders, and manage their profiles.
 
-<!-- ## 🚀 Live Demo
+ ## 🚀 Live Demo
 
-🔗 [Deployed Version on Vercel](#) *(Добавь ссылку после развертывания)* -->
+🔗 [Deployed Version on Vercel](https://e-commerce-app-pink-one.vercel.app/)
 
 ## 🛠 Technologies
 
