@@ -47,7 +47,7 @@ const Home = () => {
     );
   } else {
     return (
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4 overflow-hidden">
         <SEO
           title={"Home"}
           description={"Welcome to My Shop, your destination for the latest products and exclusive offers."}
