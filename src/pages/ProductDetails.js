@@ -7,7 +7,8 @@ import { useShoppingCart } from "../contexts/CartContext";
 import ReviewCard from '../components/ReviewCard';
 import ProductCard from '../components/ProductCard';
 import AddToCartModal from '../components/modals/AddToCartModal';
-import Spinner from '../components/Spinner'
+import Spinner from '../components/Spinner';
+import SEO from "../components/SEO";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -57,6 +58,11 @@ const ProductDetails = () => {
   } else {
     return (
       <div className="container mx-auto p-6 max-w-4xl">
+        <SEO 
+        title={product.title} 
+        description={product.description}
+        keywords={product.tags.join(' ')}
+        />
         <AddToCartModal isOpen={isModalOpen} closePopup={closePopup} />
         <ProductCard product={product} />
         <div className="mt-8">

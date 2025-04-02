@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { fetchProducts, fetchCategories } from "../services/api";
 import { Link, useSearchParams } from "react-router-dom";
+import SEO from "../components/SEO";
 import Spinner from "../components/Spinner";
 
 const Products = () => {
@@ -60,7 +61,7 @@ const Products = () => {
 
 
     setSearchParams((prevParams) => {
-      if ( newCategory) {
+      if (newCategory) {
         prevParams.set("category", newCategory);
       } else {
         prevParams.delete("category");
@@ -93,6 +94,7 @@ const Products = () => {
   } else {
     return (
       <div className="container mx-auto p-6">
+        <SEO title={"Products"} />
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
           Our Products
         </h1>

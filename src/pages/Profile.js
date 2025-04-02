@@ -6,6 +6,7 @@ import ProfileSection from "../components/ProfileSection";
 import OrdersSection from "../components/OrderSection";
 import SecuritySection from "../components/SecuritySection";
 import Spinner from "../components/Spinner";
+import SEO from "../components/SEO";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,6 +34,10 @@ const Profile = () => {
   }
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+      <SEO
+        title={"Profile"}
+        description={"View and update your profile, check your order history, and manage security settings."}
+        keywords={"profile, account, orders, security settings"} />
       <button
         className="md:hidden p-4 bg-blue-500 text-white flex items-center"
         onClick={() => setMenuOpen(!menuOpen)}

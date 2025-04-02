@@ -1,9 +1,11 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { useFavoritesContext } from "../contexts/FavoritesContext";
 
+import { useFavoritesContext } from "../contexts/FavoritesContext";
 import { useShoppingCart } from "../contexts/CartContext";
+
+import SEO from "../components/SEO";
 
 import { FaHeartBroken } from 'react-icons/fa';
 
@@ -12,6 +14,10 @@ const Favorites = () => {
     const { addItemToCart } = useShoppingCart();
     return (
         <div>
+            <SEO
+                title={Favorites}
+                description={"View your favorite products and add them to your cart for easy access."}
+                keywords={"favorites, wishlist, products, cart, shop"} />
             {
                 favoriteItems.length > 0 ? (
                     <div className="bg-gray-50 min-h-screen py-10 px-5">

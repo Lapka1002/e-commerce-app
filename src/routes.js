@@ -9,6 +9,10 @@ import Register from './pages/Register';
 import ProductDetails from './pages/ProductDetails'
 import Favorites from './pages/Favorites';
 import Profile from './pages/Profile';
+import AboutUs from './pages/AboutUs';
+import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 const AppRoutes = () => {
     return (
@@ -22,6 +26,10 @@ const AppRoutes = () => {
             <Route path="/favorite" element={<Favorites />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
         </Routes>
     )
 }

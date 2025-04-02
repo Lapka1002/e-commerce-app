@@ -3,6 +3,8 @@ import React from "react";
 import { useShoppingCart } from "../contexts/CartContext";
 import { Link } from "react-router-dom";
 
+import SEO from "../components/SEO";
+
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
 
 
@@ -12,6 +14,11 @@ const Cart = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
+      <SEO
+        title={"Cart"}
+        description={"Review the products in your cart, update quantities, and proceed to checkout."}
+        keywords={"cart, checkout, shopping, products, online store"}
+      />
       {cartItems.length > 0 ? (
         <>
           <h2 className="text-3xl font-bold mb-6 text-center">Shopping Cart ({totalItems} {totalItems === 1 ? 'item' : 'items'})</h2>
@@ -49,7 +56,7 @@ const Cart = () => {
                       onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
                       className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                     >
-                       <FaPlus />
+                      <FaPlus />
                     </button>
                   </div>
                   <button

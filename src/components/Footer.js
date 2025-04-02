@@ -9,7 +9,7 @@ const Footer = () => {
           <div>
             <ul className="space-y-2">
               <li>
-                <NavLink to="/about" className="hover:text-blue-500 transition duration-300">
+                <NavLink to="/aboutUs" className="hover:text-blue-500 transition duration-300">
                   About Us
                 </NavLink>
               </li>
@@ -19,7 +19,7 @@ const Footer = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/privacy-policy" className="hover:text-blue-500 transition duration-300">
+                <NavLink to="/privacy" className="hover:text-blue-500 transition duration-300">
                   Privacy Policy
                 </NavLink>
               </li>
