@@ -24,7 +24,7 @@ const CategoriesSection = ({ categories }) => {
             >
                 {categories.map((category, index) => (
                     <SwiperSlide key={index} className="w-auto">
-                        <Link to={`/products?category=${category.name}`}  className="p-4 text-center">
+                        <Link to={`/products?category=${category.slug}`}  className="p-4 text-center">
                         <span className="text-lg font-semibold text-gray-700 hover:text-blue-600">{category.name}</span>
                         </Link>
                     </SwiperSlide>
