@@ -61,7 +61,7 @@ const ProductDetails = () => {
         <SEO 
         title={product.title} 
         description={product.description}
-        keywords={product.tags.join(' ')}
+        keywords={product.tags.join(', ')}
         />
         <AddToCartModal isOpen={isModalOpen} closePopup={closePopup} />
         <ProductCard product={product} />

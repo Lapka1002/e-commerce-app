@@ -71,7 +71,6 @@ const ProductCard = ({ product }) => {
                     <h1 className="text-3xl sm:text-2xl font-bold text-gray-800">{product.title}</h1>
                     <p className="text-lg text-gray-600 my-3">{product.description}</p>
                     <p className="text-2xl font-semibold text-blue-600">${product.price}</p>
-                    <p className="text-2xl font-semibold text-blue-600">{product.category}</p>
                 </div>
 
                 <div className="flex justify-between items-center mt-4">
