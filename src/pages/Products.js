@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { fetchProducts, fetchCategories } from "../services/api";
 import { Link, useSearchParams } from "react-router-dom";
+import { useShoppingCart } from "../contexts/CartContext";
 import SEO from "../components/SEO";
 import Spinner from "../components/Spinner";
 
@@ -20,6 +21,7 @@ const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState(categoryFromUrl);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalProducts, setTotalProducts] = useState(0);
+  const { addItemToCart } = useShoppingCart();
 
   const loadData = useCallback(async () => {
     try {
@@ -147,23 +149,44 @@ const Products = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
               <div
-                key={product.id}
-                className="relative group overflow-hidden border rounded-lg bg-white shadow-md hover:shadow-lg transition-all"
+              key={product.id}
+              className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border"
+            >
+              <Link to={`/products/${product.id}`}>
+                <div className="relative w-full h-60 bg-gray-50 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={product.thumbnail}
+                    alt={product.title}
+                    className="object-contain max-h-full transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-4">
+                  <h2 className="text-base text-gray-800 font-medium truncate">{product.title}</h2>
+                  <p className="text-lg font-semibold text-gray-900 mt-1">${product.price}</p>
+                </div>
+              </Link>
+            
+              <button
+                className="absolute bottom-4 right-4 bg-blue-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md hover:bg-blue-600"
+                title="Add to cart"
+                onClick={() => addItemToCart(product)}
               >
-                <Link to={`/products/${product.id}`}>
-                  <div className="relative w-full h-80">
-                    <img
-                      src={product.thumbnail}
-                      alt={product.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h2 className="text-sm text-gray-800 font-medium">{product.title}</h2>
-                    <p className="text-lg font-bold text-gray-900 mt-1">${product.price}</p>
-                  </div>
-                </Link>
-              </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.2 6h12.4L17 13M9 21a1 1 0 11-2 0 1 1 0 012 0zm10 0a1 1 0 11-2 0 1 1 0 012 0z"
+                  />
+                </svg>
+              </button>
+            </div>
             ))}
           </div>
         )}

@@ -31,7 +31,7 @@ const HamburgerMenu = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                    : "hover:text-blue-600 transition duration-300"
+                    : "hover:text-blue-600 transition duration-300 text-grey-400"
                 }
               >
                 Home
@@ -43,10 +43,10 @@ const HamburgerMenu = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                    : "hover:text-blue-600 transition duration-300"
+                    : "hover:text-blue-600 transition duration-300 text-grey-400"
                 }
               >
-                Shop
+                Products
               </NavLink>
             </li>
             <li>
@@ -55,7 +55,7 @@ const HamburgerMenu = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                    : "hover:text-blue-600 transition duration-300"
+                    : "hover:text-blue-600 transition duration-300 text-grey-400"
                 }
               >
                 Favorites
@@ -67,7 +67,7 @@ const HamburgerMenu = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-blue-600 border-b-2 border-blue-600 pb-1 relative"
-                    : "hover:text-blue-600 transition duration-300 relative"
+                    : "hover:text-blue-600 transition duration-300 text-grey-400 relative"
                 }
               >
                 {totalItems > 0 ? <div className="absolute top-[-6px] right-[-20px] bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{totalItems}</div> : ``}
@@ -82,7 +82,7 @@ const HamburgerMenu = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                        : "hover:text-blue-600 transition duration-300"
+                        : "hover:text-blue-600 transition duration-300 text-grey-400"
                     }
                   >
                     Profile
@@ -141,7 +141,7 @@ const HamburgerMenu = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                    : "hover:text-blue-600 transition duration-300"
+                    : "hover:text-blue-600 transition duration-300 text-grey-400"
                 }
               >
                 Home
@@ -153,10 +153,10 @@ const HamburgerMenu = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                    : "hover:text-blue-600 transition duration-300"
+                    : "hover:text-blue-600 transition duration-300 text-grey-400"
                 }
               >
-                Shop
+                Products
               </NavLink>
             </li>
             <li>
@@ -165,7 +165,7 @@ const HamburgerMenu = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                    : "hover:text-blue-600 transition duration-300"
+                    : "hover:text-blue-600 transition duration-300 text-grey-400"
                 }
               >
                 Favorites
@@ -177,7 +177,7 @@ const HamburgerMenu = () => {
                 className={({ isActive }) =>
                   isActive
                     ? "text-blue-600 border-b-2 border-blue-600 pb-1 relative"
-                    : "hover:text-blue-600 transition duration-300 relative"
+                    : "hover:text-blue-600 transition duration-300 text-grey-400 relative"
                 }
               >
                 {totalItems > 0 ? <div className="absolute top-[-13px] right-[-13px] bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{totalItems}</div> : ``}
@@ -192,7 +192,7 @@ const HamburgerMenu = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                        : "hover:text-blue-600 transition duration-300"
+                        : "hover:text-blue-600 transition duration-300 text-grey-400"
                     }
                   >
                     Profile
@@ -217,7 +217,7 @@ const HamburgerMenu = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-blue-600 border-b-2 border-blue-600 pb-1"
-                        : "hover:text-blue-600 transition duration-300"
+                        : "hover:text-blue-600 transition duration-300 text-grey-400"
                     }
                   >
                     Log In
